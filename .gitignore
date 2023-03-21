@@ -1,0 +1,16 @@
+# Ignore the dist directory
+/dist/
+
+# Ignore any Node.js modules
+/node_modules/
+
+# Ignore any files that are generated during development
+*.log
+*.log.*
+*.pid
+*.pid.*
+*.seed
+*.db
+*.sqlite
+*.env
+*.env.*
