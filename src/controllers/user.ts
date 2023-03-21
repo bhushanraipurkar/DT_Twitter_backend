@@ -60,6 +60,26 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+export const getUserByEmail = async (req: Request, res: Response) => {
+  let connection: Mongoose | undefined;
+  const { email } = req.params;
+  try {
+    connection = await getConnection();
+    const user: userDoc | null = await User.findOne({ email: email });
+    releaseConnection(connection);
+    if(user == null){
+      return sendSuccessResponse<null>(res, user, 'User not found');
+    }
+    return sendSuccessResponse<userDoc | null>(res, user, 'Logged In');
+  } catch (error) {
+    if (connection) {
+      await releaseConnection(connection);
+    }
+    console.error(error);
+    return sendFailureResponse(res, 'Internal server error');
+  }
+};
+
 // export const followUser = async (req: Request, res: Response) => {
 //   const { userId, followerId } = req.params;
 
